@@ -298,27 +298,6 @@ int floatFloat2Int(unsigned uf) {
  */
 /*  https://steve.hollasch.net/cgindex/coding/ieeefloat.html bibliography*/
 unsigned floatPower2(int x) {
-   
-  unsigned expo;
-  unsigned frac;
 
-  if(x < -149){
-    return 0;
-  }
-  //denormalizado
-  if( x<-126 && x>=-149){   
-    int corrimiento = (-x-126);
-    frac =  1 << (23-corrimiento);
-    return frac;
-
-  }
-  if(x>=-126 && x<=127){
-    expo = (x+127)<<23;
-    return expo;
-  }
-  if(x>127){
-    //infinito
-    return 0xFF << 23;;
-  }
   return 0;
 }
