@@ -152,19 +152,25 @@ int bitXor(int x, int y) {
  *   Rating: 1
  */
 int tmin(void) {
-  /*change bit 1 to get 0x80000000 */
+  
   return 1<<31;
 }
-//2
 /*
- * isTmax - returns 1 if x is the maximum, two's complement number,
- *     and 0 otherwise 
- *   Legal ops: ! ~ & ^ | +
- *   Max ops: 10
- *   Rating: 1
- */
+  * isTmax - devuelve 1 si x es el número máximo, complemento a dos,
+  * y 0 en caso contrario
+  * Operaciones legales: ! ~ & ^ | +
+  * Operaciones máximas: 10
+  * Calificación: 1
+  */
+
 int isTmax(int x) {
-  return 2;
+
+
+  int a = ~((x + 1) ^ x);
+  int b = !(x + 1); 
+  int result = !(a + b);
+
+  return result;
 }
 /* 
  * allOddBits - return 1 if all odd-numbered bits in word set to 1
@@ -290,6 +296,29 @@ int floatFloat2Int(unsigned uf) {
  *   Max ops: 30 
  *   Rating: 4
  */
+/*  https://steve.hollasch.net/cgindex/coding/ieeefloat.html bibliography*/
 unsigned floatPower2(int x) {
-    return 2;
+   
+  unsigned expo;
+  unsigned frac;
+
+  if(x < -149){
+    return 0;
+  }
+  //denormalizado
+  if( x<-126 && x>=-149){   
+    int corrimiento = (-x-126);
+    frac =  1 << (23-corrimiento);
+    return frac;
+
+  }
+  if(x>=-126 && x<=127){
+    expo = (x+127)<<23;
+    return expo;
+  }
+  if(x>127){
+    //infinito
+    return 0xFF << 23;;
+  }
+  return 0;
 }
